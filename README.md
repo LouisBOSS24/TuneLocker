@@ -1,4 +1,4 @@
-## 🎸 TuneLocker
+# 🎸 TuneLocker
 
 TuneLocker est une application web permettant aux musiciens de répertorier leur collection de matériel de musique.
 
