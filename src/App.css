@@ -1,0 +1,1590 @@
+/* ---------- Page d'accueil (Front) avec images en fond ---------- */
+
+.front {
+  position: relative; /* ancre les images absolues */
+  min-height: 100svh;
+  overflow: hidden; /* coupe les images qui débordent sur les côtés */
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+/* Texte et boutons doivent passer DEVANT les images */
+.front .title,
+.front > p,
+.front .stack {
+  position: relative;
+  z-index: 1;
+}
+
+/* Pousse les boutons en bas de la page */
+.front .stack {
+  margin-top: 87%;
+  max-width: none;
+  align-items: center;
+  gap: 25px;
+}
+
+/* Conteneur des images : couvre toute la page, derrière le contenu */
+.front-images {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none; /* ne bloque pas les clics sur les boutons */
+}
+
+.front-images img {
+  position: absolute;
+  user-select: none;
+}
+
+/* ---------- Images d'accueil : version ORANGE par défaut ---------- */
+.front-images__speaker {
+  left: 5%;
+  bottom: 25%;
+  width: 50%;
+}
+
+.front-images__guitar {
+  right: -27%;
+  bottom: 17%;
+  width: 87%;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .front-images__speaker {
+    content: url(/purplespeaker.png);
+    left: 0%;
+    bottom: 22%;
+    width: 55%;
+  }
+  :root:not([data-theme="light"]) .front-images__guitar {
+    content: url(/purpleguitar.png);
+    right: -10%;
+    bottom: 20%;
+    width: 80%;
+  }
+}
+
+/* 2) Mode sombre forcé manuellement (touche T) : prime sur le système. */
+[data-theme="dark"] .front-images__speaker {
+  content: url(/purplespeaker.png);
+  left: 5%;
+  bottom: 24%;
+  width: 55%;
+}
+[data-theme="dark"] .front-images__guitar {
+  content: url(/purpleguitar.png);
+  right: -10%;
+  bottom: 20%;
+  width: 80%;
+}
+
+/* ---------- Mise en page mobile-first ---------- */
+
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+}
+
+.app-content {
+  flex: 1;
+  padding-bottom: 80px; /* laisse la place à la navbar fixée en bas */
+}
+
+.page {
+  padding: 20px 20px 24px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  max-width: 480px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.page.front {
+  gap: 0;
+  background: var(--front-bg);
+}
+
+.page--centered {
+  min-height: 80svh;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.title {
+  margin-top: 60%;
+  display: flex;
+  flex-direction: row;
+}
+
+.title h1 {
+  font-size: 48px;
+}
+
+.slogan {
+  font-family: var(--heading);
+}
+
+.stack {
+  display: flex;
+  justify-content: center;
+}
+
+.title-locker {
+  color: var(--accent);
+}
+
+.images {
+  display: flex;
+  flex-direction: row;
+}
+
+/* ---------- Boutons & liens ---------- */
+
+.btn {
+  padding: 7px 0px;
+  width: 285px;
+  border-radius: 10px;
+  border: 2px solid var(--accent);
+  background: var(--front-btn);
+  color: var(--text-h);
+  font-size: 20px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: var(--mono);
+  text-align: center;
+  align-self: center; /* centre le bouton dans les conteneurs flex (forms, .page) */
+}
+
+.btn--primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+/* Bouton pleine largeur (utilisé pour le Comparateur sur Home) */
+.btn--block {
+  width: 100%;
+  max-width: 480px;
+  padding: 18px 24px;
+  font-size: 24px;
+  font-family: var(--mono);
+  letter-spacing: 0.5px;
+}
+
+/* Bouton Comparateur : très visible avec icône à droite */
+.btn--compare {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 22px 28px;
+  font-size: 28px;
+  font-family: var(--mono);
+  font-weight: 600;
+  border-radius: 16px;
+  letter-spacing: 0.5px;
+}
+
+/* Icône balance recolorée via masque pour suivre la couleur du texte */
+.balance-icon {
+  display: inline-block;
+  width: 36px;
+  height: 36px;
+  background-color: currentColor;
+  -webkit-mask-image: url(/balance.svg);
+  mask-image: url(/balance.svg);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.btn-back {
+  align-self: flex-start;
+  background: none;
+  border: none;
+  color: var(--text);
+  font-size: 20px;
+  cursor: pointer;
+  padding: 0;
+  font-family: var(--mono);
+}
+
+.link-muted {
+  background: none;
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--accent);
+}
+
+.link-forgot {
+  align-self: flex-end;
+  font-size: 14px;
+  margin-top: 4px;
+  color: var(--accent);
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 320px;
+}
+
+/* ---------- Formulaires ---------- */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.form label {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  color: var(--text-h);
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.form input,
+.form select,
+.form textarea {
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text-h);
+  font-size: 20px;
+  font-weight: 500;
+  font-family: inherit;
+}
+
+.form textarea {
+  resize: vertical;
+  font-size: 16px;
+}
+
+/* Ligne avec une case à cocher + libellé sur la même ligne */
+.form-row {
+  flex-direction: row !important;
+  align-items: center;
+  gap: 10px !important;
+}
+
+.form-row input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  padding: 0;
+}
+
+.input-with-button {
+  display: flex;
+  gap: 8px;
+}
+
+.input-with-button input {
+  flex: 1;
+}
+
+.input-with-button button {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+  cursor: pointer;
+  padding: 0 12px;
+}
+
+/* Bouton œil : icône SVG recolorée via masque pour suivre la couleur du texte */
+.eye-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.eye-icon {
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  background-color: var(--text);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+.eye-icon--on {
+  -webkit-mask-image: url(/Eye.svg);
+  mask-image: url(/Eye.svg);
+}
+
+.eye-icon--off {
+  -webkit-mask-image: url(/Eye-off.svg);
+  mask-image: url(/Eye-off.svg);
+}
+
+.form-error {
+  color: #d65f69;
+  font-size: 14px;
+}
+
+/* ---------- Page Amis : onglets, recherche, lignes ---------- */
+
+.muted {
+  color: var(--text);
+  opacity: 0.7;
+  font-size: 14px;
+}
+
+.tabs {
+  display: flex;
+  gap: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.tab {
+  flex: 1;
+  background: none;
+  border: none;
+  padding: 12px 8px;
+  font-size: 16px;
+  color: var(--text);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+}
+
+.tab--active {
+  color: var(--text-h);
+  font-weight: 600;
+  border-bottom-color: var(--text-h);
+}
+
+.search-input {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text-h);
+  font-size: 15px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.friend-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Avatar à initiale */
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: #fff;
+  font-weight: 600;
+  font-family: var(--sans);
+  flex-shrink: 0;
+}
+
+/* Ligne d'utilisateur (utilisée pour mes amis, demandes, recherche) */
+.friend-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+}
+
+.friend-row__main {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  background: none;
+  border: none;
+  padding: 0;
+  text-align: left;
+  cursor: pointer;
+  color: inherit;
+}
+
+.friend-row__text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.friend-row__name {
+  color: var(--text-h);
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.friend-row__pseudo {
+  color: var(--text);
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+.friend-row__right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.friend-row__status {
+  color: var(--text);
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+.friend-row__status--online {
+  color: #2faa6a;
+  opacity: 1;
+  font-weight: 600;
+}
+
+/* Boutons d'action dans une ligne */
+.row-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.row-action {
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text-h);
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.row-action--accept {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.row-action--ghost {
+  background: none;
+  border-color: transparent;
+  color: var(--text);
+}
+
+/* Page profil public */
+.profile-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 16px 0 8px;
+}
+
+.profile-header h1 {
+  margin: 8px 0 0;
+}
+
+/* ---------- Page Compte : bannière, À propos, menu ---------- */
+
+/* ---------- Page Compte avec bandeau accent ---------- */
+
+/* On enlève le padding latéral du .page uniquement quand on est sur
+   Compte, parce que le bandeau accent doit s'étendre bord-à-bord. */
+.page--compte {
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 0;
+  gap: 0;
+}
+
+/* Les sections qui ne sont pas le bandeau récupèrent le padding latéral
+   + un léger margin-top pour aérer (le gap: 0 du parent a été supprimé). */
+.page--compte > *:not(.compte-hero):not(.stat-cards) {
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-top: 18px;
+}
+
+/* Le bandeau accent : teinte douce (35% opacité), bord-à-bord en haut,
+   arrondi en bas. Padding interne large en bas pour le chevauchement
+   des stat-cards. */
+.compte-hero {
+  background: rgba(224, 172, 135, 0.35); /* mode clair : orange doux */
+  padding: 20px 20px 70px;
+  color: var(--text-h);
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+/* En mode sombre (système ou bascule manuelle), on passe au violet doux */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .compte-hero {
+    background: rgba(145, 92, 219, 0.35);
+  }
+}
+[data-theme="dark"] .compte-hero {
+  background: rgba(145, 92, 219, 0.35);
+}
+
+/* La teinte étant claire (35% opacité), le texte garde la couleur normale */
+.compte-hero h1,
+.compte-hero .profile-banner__name {
+  color: var(--text-h);
+}
+
+/* Stat cards positionnées par-dessus le bas du bandeau (overlap) */
+.page--compte .stat-cards {
+  margin-top: -40px;
+  position: relative;
+  z-index: 1;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.profile-banner {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 8px 0 16px;
+}
+
+.profile-banner__text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.profile-banner__name {
+  font-family: var(--heading);
+  font-size: 40px;
+  font-weight: 500;
+  color: var(--text-h);
+  line-height: 1;
+  letter-spacing: -0.5px;
+}
+
+.profile-banner__pseudo {
+  color: var(--text);
+  opacity: 0.55;
+  font-size: 20px;
+}
+
+.about {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.about__title {
+  font-family: var(--heading);
+  font-size: 26px;
+  margin: 16px 0 6px;
+  color: var(--text-h);
+  letter-spacing: -0.3px;
+}
+
+.about__text {
+  color: var(--text-h);
+  opacity: 0.85;
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* Liste d'onglets type "ligne avec icône + chevron" */
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.menu-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 18px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: var(--code-bg);
+  color: var(--text-h);
+  font-family: var(--mono);
+  font-size: 22px;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  transition:
+    background 0.15s,
+    transform 0.05s;
+}
+
+.menu-row:hover {
+  background: color-mix(in srgb, var(--code-bg) 70%, var(--accent) 8%);
+}
+
+.menu-row:active {
+  transform: scale(0.99);
+}
+
+.menu-row__label {
+  flex: 1;
+}
+
+/* Icônes des menu-rows : on charge les SVG de /public via mask-image
+   pour qu'elles prennent la couleur du texte (currentColor). */
+.menu-icon {
+  display: inline-block;
+  width: 26px;
+  height: 26px;
+  background-color: currentColor;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  flex-shrink: 0;
+}
+.menu-icon--archive {
+  -webkit-mask-image: url(/Archive.svg);
+  mask-image: url(/Archive.svg);
+}
+.menu-icon--heart {
+  -webkit-mask-image: url(/Heart.svg);
+  mask-image: url(/Heart.svg);
+}
+.menu-icon--medal {
+  -webkit-mask-image: url(/Medal.svg);
+  mask-image: url(/Medal.svg);
+}
+.menu-icon--users {
+  -webkit-mask-image: url(/Users.svg);
+  mask-image: url(/Users.svg);
+}
+.menu-icon--gear {
+  -webkit-mask-image: url(/Gear.svg);
+  mask-image: url(/Gear.svg);
+}
+.menu-icon--shield {
+  -webkit-mask-image: url(/Shield.svg);
+  mask-image: url(/Shield.svg);
+}
+.menu-icon--chevron {
+  width: 18px;
+  height: 18px;
+  opacity: 0.55;
+  -webkit-mask-image: url(/Chevron.svg);
+  mask-image: url(/Chevron.svg);
+}
+
+/* ---------- Cartes statistiques (Compte) ---------- */
+
+.stat-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  min-height: 0;
+}
+
+.stat-card__label {
+  font-size: 12px;
+  color: var(--text);
+  opacity: 0.75;
+  font-weight: 500;
+}
+
+.stat-card__value {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--accent);
+  font-family: var(--heading);
+  letter-spacing: -0.5px;
+  line-height: 1;
+}
+
+/* ---------- Avatar photo ---------- */
+.avatar--photo {
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* ---------- ImageUpload ---------- */
+.image-upload {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+}
+.image-upload__preview {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+/* ---------- Chips (filtres / sélecteurs courts) ---------- */
+.chip-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.chip {
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text-h);
+  cursor: pointer;
+  font-size: 14px;
+  font-family: inherit;
+}
+.chip--active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+/* ---------- Grille de cartes du Locker ---------- */
+.gear-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+.gear-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  overflow: hidden;
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+  font-family: inherit;
+  color: var(--text-h);
+  width: 100%;
+}
+.gear-card__photo {
+  aspect-ratio: 1 / 1;
+  background: var(--code-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.gear-card__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.gear-card__placeholder {
+  font-size: 40px;
+  opacity: 0.4;
+}
+.gear-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 12px;
+}
+.gear-card__name {
+  font-weight: 600;
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.gear-card__sub {
+  font-size: 12px;
+  color: var(--text);
+  opacity: 0.7;
+}
+.gear-card__price {
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 15px;
+  margin-top: 4px;
+}
+.gear-card__cat {
+  font-size: 11px;
+  color: var(--text);
+  opacity: 0.6;
+}
+
+/* ---------- Home : en-tête avec titre + icône recherche ---------- */
+.home-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.home-title {
+  font-family: var(--heading);
+  font-size: 44px;
+  font-weight: 500;
+  margin: 0;
+  color: var(--text-h);
+  letter-spacing: -0.5px;
+  line-height: 1;
+}
+.home-title__accent {
+  color: var(--accent);
+}
+.home-search-btn {
+  background: none;
+  border: none;
+  color: var(--text-h);
+  cursor: pointer;
+  padding: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.home-search-btn:hover {
+  color: var(--accent);
+}
+
+/* ---------- Feed (Home) ---------- */
+.feed {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.post {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px;
+  background: var(--code-bg);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.post__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.post__meta {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  gap: 1px;
+}
+.post__name {
+  font-weight: 700;
+  color: var(--text-h);
+  font-size: 17px;
+  font-family: var(--mono);
+}
+.post__pseudo {
+  font-size: 13px;
+  color: var(--text);
+  opacity: 0.6;
+}
+.post__time {
+  font-size: 13px;
+  color: var(--text);
+  opacity: 0.55;
+  white-space: nowrap;
+}
+.post__more {
+  background: none;
+  border: none;
+  color: var(--text);
+  cursor: pointer;
+  opacity: 0.55;
+  font-size: 22px;
+  line-height: 1;
+  padding: 0 4px;
+}
+.post__more:hover {
+  color: var(--accent);
+  opacity: 1;
+}
+.post__body {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.4;
+  color: var(--text-h);
+}
+.post__photo {
+  width: 100%;
+  max-height: 280px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+/* ---------- Paramètres ---------- */
+.settings-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-top: 1px solid var(--border);
+  padding-top: 18px;
+}
+.settings-section h2 {
+  font-family: var(--heading);
+  margin: 0 0 4px;
+  color: var(--text-h);
+}
+kbd {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1px 5px;
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+/* ---------- Comparateur ---------- */
+.compare-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.compare-col {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+.compare-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 56px;
+}
+.compare-name {
+  font-weight: 600;
+  color: var(--text-h);
+}
+.compare-photo {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+.compare-item-name {
+  margin: 4px 0;
+  text-align: center;
+  font-size: 16px;
+  color: var(--text-h);
+}
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+  font-size: 13px;
+}
+.compare-table td,
+.compare-table th {
+  padding: 8px;
+  border-top: 1px solid var(--border);
+  vertical-align: top;
+}
+.compare-cell {
+  text-align: center;
+  width: 38%;
+  color: var(--text-h);
+}
+.compare-label {
+  text-align: center;
+  width: 24%;
+  font-weight: 600;
+  color: var(--text);
+  opacity: 0.85;
+  background: var(--code-bg);
+  border-radius: 6px;
+  font-size: 12px;
+}
+.compare-row-diff .compare-cell {
+  background: rgba(212, 120, 56, 0.08);
+  font-weight: 600;
+}
+
+/* ---------- Détail d'un item ---------- */
+.detail-photo {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+}
+.detail-description {
+  white-space: pre-wrap;
+  line-height: 1.4;
+  color: var(--text-h);
+}
+.badge-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--accent-bg);
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid var(--accent-border);
+}
+.spec-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 0;
+}
+.spec-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 0;
+  border-top: 1px solid var(--border);
+  font-size: 14px;
+}
+.spec-row dt {
+  color: var(--text);
+  opacity: 0.85;
+  font-weight: 500;
+}
+.spec-row dd {
+  margin: 0;
+  text-align: right;
+  color: var(--text-h);
+  font-weight: 600;
+  max-width: 60%;
+}
+
+/* ---------- Popup / Modal ---------- */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 1000;
+}
+
+.modal-box {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  max-width: 360px;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.modal-body {
+  color: var(--text);
+  font-size: 15px;
+}
+
+/* ---------- Barre de navigation (bas, mobile-first) ---------- */
+
+.navbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background: var(--bg);
+  max-width: 1126px;
+  margin: 0 auto;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--border);
+  text-decoration: none;
+}
+
+/* Couleur de l'onglet actif : orange en clair, violet en sombre */
+.navbar {
+  --nav-active: #d47838;
+}
+@media (prefers-color-scheme: dark) {
+  .navbar {
+    --nav-active: #7938d4;
+  }
+}
+/* La bascule manuelle (touche T) prime sur le thème système */
+[data-theme="light"] .navbar {
+  --nav-active: #d47838;
+}
+[data-theme="dark"] .navbar {
+  --nav-active: #7938d4;
+}
+
+.nav-item.active {
+  color: var(--nav-active);
+  font-weight: 700;
+}
+
+/* Icône colorée via masque : la couleur vient de background-color,
+   ce qui permet de la changer en CSS (impossible avec un <img>). */
+.nav-icon {
+  width: 42px;
+  height: 42px;
+  background-color: var(--border);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+.nav-icon--home {
+  -webkit-mask-image: url(/Home.svg);
+  mask-image: url(/Home.svg);
+}
+.nav-icon--locker {
+  -webkit-mask-image: url(/Briefcase.svg);
+  mask-image: url(/Briefcase.svg);
+}
+.nav-icon--amis {
+  -webkit-mask-image: url(/Users.svg);
+  mask-image: url(/Users.svg);
+}
+.nav-icon--compte {
+  -webkit-mask-image: url(/User.svg);
+  mask-image: url(/User.svg);
+}
+
+.input-with-button img {
+  -webkit-mask-image: url(/Eye.svg);
+  mask-image: url(/Eye.svg);
+}
+.input-with-button img {
+  -webkit-mask-image: url(/Eye-off.svg);
+  mask-image: url(/Eye-off.svg);
+}
+
+/* Quand l'onglet est actif (page courante) → couleur demandée */
+.nav-item.active .nav-icon {
+  background-color: var(--nav-active);
+}
+
+.nav-icon--add {
+  -webkit-mask-image: url(/Plus.svg);
+  mask-image: url(/Plus.svg);
+}
+
+/* Icône "+" au centre du bouton : masque + couleur via background-color */
+.nav-addbutton {
+  display: inline-block;
+  width: 42px;
+  height: 42px;
+  background-color: var(--bg);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+.nav-add {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  border: none;
+  background: var(--accent);
+  cursor: pointer;
+  margin-top: -16px; /* léger relief au centre */
+  display: flex;
+  align-items: center;
+  justify-content: center; /* centre l'icône dans le bouton */
+}
+
+/* =============================================================
+   Responsive desktop (≥ 1024px)
+   Sidebar verticale à gauche, contenu large à droite.
+   ============================================================= */
+
+@media (min-width: 1024px) {
+  #root {
+    width: 100%;
+    max-width: none;
+    border: none;
+    text-align: left;
+    display: block;
+  }
+
+  .app-shell {
+    display: block;
+    min-height: 100svh;
+  }
+
+  /* ---------- Sidebar gauche ---------- */
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 240px;
+    height: 100vh;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: 6px;
+    padding: 28px 16px;
+    background: var(--code-bg);
+    border-right: 1px solid var(--border);
+    border-top: none;
+    max-width: none;
+    margin: 0;
+    transform: none;
+    z-index: 50;
+  }
+
+  /* Logo en haut de la sidebar via ::before */
+  .navbar::before {
+    content: "TuneLocker";
+    display: block;
+    font-family: var(--heading);
+    font-size: 28px;
+    color: var(--text-h);
+    padding: 0 12px 24px;
+    letter-spacing: -0.5px;
+  }
+
+  .nav-item {
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 100%;
+    padding: 12px 14px;
+    gap: 14px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text);
+    transition: background 0.15s;
+  }
+  .nav-item:hover {
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
+    color: var(--text-h);
+  }
+  .nav-item.active {
+    background: color-mix(in srgb, var(--accent) 20%, transparent);
+    color: var(--nav-active);
+  }
+  .nav-icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  /* Bouton "+" dans la sidebar : pleine largeur, plus discret */
+  .nav-add {
+    width: 100%;
+    height: 48px;
+    border-radius: 12px;
+    margin: 8px 0 16px;
+    order: -1;
+    font-size: 24px;
+  }
+  .nav-addbutton {
+    width: 28px;
+    height: 28px;
+  }
+
+  /* ---------- Contenu principal ---------- */
+  .app-content {
+    margin-left: 240px;
+    padding: 0;
+    padding-bottom: 0;
+    min-height: 100svh;
+  }
+
+  /* Seules les pages dans l'app (post-connexion) prennent le format large.
+     Les pages publiques (Front, Login, Register) gardent le format mobile. */
+  .app-content .page {
+    max-width: 1080px;
+    padding: 36px 48px;
+    gap: 24px;
+    margin: 0 auto;
+  }
+
+  /* Grilles plus larges */
+  .gear-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+
+  /* Le contenu très "feed-like" reste centré et plus étroit pour la lisibilité */
+  .feed,
+  .menu,
+  .form,
+  .friend-list {
+    max-width: 640px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .stat-cards {
+    max-width: 640px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .about {
+    max-width: 720px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  /* Page Compte : bandeau accent contraint à une largeur raisonnable */
+  .page--compte > *:not(.compte-hero):not(.stat-cards) {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  /* Le bandeau prend la largeur de la .page (pas de bleed). */
+  .compte-hero {
+    max-width: none;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 32px 48px 70px;
+    border-radius: 0 0 28px 28px;
+  }
+  .page--compte .stat-cards {
+    padding: 0;
+  }
+
+  /* Comparateur : deux colonnes plus aérées */
+  .compare-grid {
+    gap: 32px;
+  }
+
+  /* Bouton Comparateur plus large */
+  .btn--compare {
+    max-width: 640px;
+  }
+
+  /* En-tête de la Home alignée avec le feed */
+  .home-header {
+    max-width: 640px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  /* Le titre TuneLocker de la sidebar est déjà affiché : on cache le doublon
+     éventuel dans la Home si nécessaire ; sinon laisser tel quel */
+  .home-title {
+    font-size: 38px;
+  }
+
+  /* Bannière de profil un peu plus grande sur desktop */
+  .profile-banner__name {
+    font-size: 44px;
+  }
+
+  /* La page Front (publique, pas de sidebar) garde son look mobile :
+     on annule l'offset gauche. */
+  body:has(.front) .app-content,
+  .page.front {
+    margin-left: 0;
+  }
+}
+
+@media (min-width: 1440px) {
+  .page {
+    max-width: 1240px;
+    padding: 48px 56px;
+  }
+  .gear-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+/* =============================================================
+   Desktop polish (≥ 1024px) — ajustements ciblés
+   ============================================================= */
+
+@media (min-width: 1024px) {
+  /* ---------- Sidebar : un peu plus large, plus lisible ---------- */
+  .navbar {
+    width: 260px;
+    padding: 32px 18px;
+    gap: 4px;
+  }
+  .app-content {
+    margin-left: 260px;
+  }
+  .navbar::before {
+    font-size: 32px;
+    padding: 0 12px 32px;
+  }
+  .nav-item {
+    padding: 14px 16px;
+    font-size: 17px;
+    gap: 16px;
+  }
+  .nav-item span:last-child {
+    flex: 1;
+    text-align: left;
+  }
+  .nav-icon {
+    width: 26px;
+    height: 26px;
+  }
+
+  /* ---------- Liste d'amis / admin : profils plus généreux ---------- */
+  .friend-list {
+    max-width: 760px;
+    gap: 8px;
+  }
+  .friend-row {
+    padding: 12px 16px;
+    gap: 16px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--code-bg);
+    transition: background 0.15s;
+  }
+  .friend-row:hover {
+    background: color-mix(in srgb, var(--accent) 8%, var(--code-bg));
+  }
+  .friend-row__main {
+    gap: 16px;
+  }
+  .friend-row .avatar {
+    width: 60px !important;
+    height: 60px !important;
+    font-size: 26px !important;
+  }
+  .friend-row__name {
+    font-size: 18px;
+  }
+  .friend-row__pseudo {
+    font-size: 14px;
+  }
+  .friend-row__status {
+    font-size: 14px;
+  }
+
+  /* Action en bout de ligne (boutons accepter/refuser/⋮) un peu plus grande */
+  .row-action {
+    padding: 8px 14px;
+    font-size: 14px;
+  }
+
+  /* ---------- Page Compte : profil un peu plus large ---------- */
+  .profile-banner {
+    gap: 22px;
+  }
+  .profile-banner .avatar {
+    width: 96px !important;
+    height: 96px !important;
+    font-size: 40px !important;
+  }
+
+  /* ---------- Page profil public : en-tête plus présentable ---------- */
+  .profile-header .avatar {
+    width: 128px !important;
+    height: 128px !important;
+    font-size: 54px !important;
+  }
+  .profile-header h1 {
+    font-size: 44px;
+  }
+
+  /* ---------- Cartes statistiques en desktop : un peu plus grandes ---------- */
+  .stat-cards {
+    max-width: 720px;
+  }
+  .stat-card {
+    padding: 18px 22px;
+  }
+  .stat-card__value {
+    font-size: 30px;
+  }
+
+  /* ---------- Onglets (Amis : Mes amis / Demandes) ---------- */
+  .tabs {
+    max-width: 760px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .tab {
+    font-size: 17px;
+    padding: 14px 12px;
+  }
+
+  /* ---------- Search input plus large ---------- */
+  .search-input {
+    max-width: 760px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 14px 16px;
+    font-size: 16px;
+  }
+
+  /* ---------- Détail item : photo plus grande ---------- */
+  .detail-photo {
+    max-width: 480px;
+    margin: 0 auto;
+    display: block;
+  }
+  .spec-list {
+    max-width: 640px;
+    margin: 0 auto;
+    width: 100%;
+  }
+}

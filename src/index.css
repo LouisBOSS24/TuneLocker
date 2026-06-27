@@ -1,0 +1,204 @@
+:root {
+  --text: #1a1a1a;
+  --text-h: #1a1a1a;
+  --bg: #faf1eb;
+  --border: #898989;
+  --code-bg: #faf1eb;
+  --accent: #d47838;
+  --accent-bg: rgba(170, 59, 255, 0.1);
+  --accent-border: #d47838;
+  --social-bg: rgb(255, 221, 0);
+  --shadow:
+    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  --front-bg: linear-gradient(
+    to bottom,
+    #faf1eb 59%,
+    rgba(232, 193, 165, 0.55) 84%,
+    rgba(214, 144, 95, 0.3) 100%
+  );
+  --front-btn: linear-gradient(
+    to bottom,
+    #faf1eb 9%,
+    #eabd9d 58%,
+    #cf8f62 85%,
+    #d47838 100%
+  );
+  --sans: "Space Grotesk", sans-serif;
+  --heading: "Asimovian", sans-serif;
+  --mono: "Space Grotesk", sans-serif;
+
+  font: 18px/145% var(--sans);
+  letter-spacing: 0.18px;
+  color-scheme: light dark;
+  color: var(--text);
+  background: var(--bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  @media (max-width: 1024px) {
+    font-size: 16px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: #faf1eb;
+    --text-h: #faf1eb;
+    --bg: #1a1a1a;
+    --border: #898989;
+    --code-bg: #1a1a1a;
+    --accent: #7938d4;
+    --accent-bg: rgba(192, 132, 252, 0.15);
+    --accent-border: #7938d4;
+    --social-bg: rgba(47, 48, 58, 0.5);
+    --shadow:
+      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+    --front-bg: linear-gradient(
+      to bottom,
+      #1a1a1a 42%,
+      rgba(41, 30, 56, 0.58) 56%,
+      rgba(75, 47, 114, 0.3) 76%,
+      rgba(121, 56, 212, 0.4) 100%
+    );
+    --front-btn: linear-gradient(
+      to bottom,
+      #1a1a1a 9%,
+      #2c1e41 58%,
+      #402665 85%,
+      #7335cb 100%
+    );
+  }
+
+  #social .button-icon {
+    filter: invert(1) brightness(2);
+  }
+}
+
+/* --- Bascule manuelle via la touche "T" ---
+   Ces sélecteurs ont une spécificité supérieure au @media ci-dessus :
+   l'utilisateur peut donc forcer un thème indépendamment du système. */
+:root[data-theme="light"] {
+  --text: #1a1a1a;
+  --text-h: #1a1a1a;
+  --bg: #faf1eb;
+  --border: #898989;
+  --code-bg: #faf1eb;
+  --accent: #d47838;
+  --accent-bg: rgba(170, 59, 255, 0.1);
+  --accent-border: #d47838;
+  --social-bg: rgb(255, 221, 0);
+  --shadow:
+    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  --front-bg: linear-gradient(
+    to bottom,
+    #faf1eb 59%,
+    rgba(232, 193, 165, 0.55) 84%,
+    rgba(214, 144, 95, 0.3) 100%
+  );
+  --front-btn: linear-gradient(
+    to bottom,
+    #faf1eb 9%,
+    #eabd9d 58%,
+    #cf8f62 85%,
+    #d47838 100%
+  );
+}
+
+:root[data-theme="dark"] {
+  --text: #faf1eb;
+  --text-h: #faf1eb;
+  --bg: #1a1a1a;
+  --border: #898989;
+  --code-bg: #1a1a1a;
+  --accent: #7938d4;
+  --accent-bg: rgba(192, 132, 252, 0.15);
+  --accent-border: #7938d4;
+  --social-bg: rgba(47, 48, 58, 0.5);
+  --shadow:
+    rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+  --front-bg: linear-gradient(
+    to bottom,
+    #1a1a1a 42%,
+    rgba(41, 30, 56, 0.58) 56%,
+    rgba(75, 47, 114, 0.3) 76%,
+    rgba(121, 56, 212, 0.4) 100%
+  );
+  --front-btn: linear-gradient(
+    to bottom,
+    #1a1a1a 9%,
+    #2c1e41 58%,
+    #402665 85%,
+    #7335cb 100%
+  );
+}
+
+body {
+  margin: 0;
+}
+
+/* Les éléments de formulaire n'héritent PAS de font-family par défaut,
+   ce qui les fait rendre en Arial/Helvetica même quand le reste de la
+   page est en Space Grotesk. On force l'héritage globalement. */
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
+#root {
+  width: 1126px;
+  max-width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+h1,
+h2 {
+  font-family: var(--heading);
+  font-weight: 500;
+  color: var(--text-h);
+}
+
+h1 {
+  font-size: 56px;
+  letter-spacing: -1.68px;
+  margin: 32px 0;
+  @media (max-width: 1024px) {
+    font-size: 36px;
+    margin: 20px 0;
+  }
+}
+h2 {
+  font-size: 24px;
+  line-height: 118%;
+  letter-spacing: -0.24px;
+  margin: 0 0 8px;
+  @media (max-width: 1024px) {
+    font-size: 20px;
+  }
+}
+p {
+  margin: 0;
+}
+
+code,
+.counter {
+  font-family: var(--mono);
+  display: inline-flex;
+  border-radius: 4px;
+  color: var(--text-h);
+}
+
+code {
+  font-size: 15px;
+  line-height: 135%;
+  padding: 4px 8px;
+  background: var(--code-bg);
+}

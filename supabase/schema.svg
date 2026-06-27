@@ -1,0 +1,202 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1080" role="img">
+  <title>Schéma de la base de données TuneLocker</title>
+  <desc>Diagramme ER : Auth (auth.users, profiles, friendships), Gear de base (gear avec photo_urls intégré) et trois tables d'extension par type (gear_guitar, gear_amp, gear_pedal). Flèches orange indiquant les clés étrangères et la cardinalité.</desc>
+
+  <defs>
+    <style>
+      text { font-family: ui-sans-serif, system-ui, -apple-system, sans-serif; }
+      .card     { fill: #ffffff; stroke: #d4d4d4; stroke-width: 1; }
+      .h-auth   { fill: #efe9ff; }
+      .h-gear   { fill: #ffece0; }
+      .h-type   { fill: #e8f6ed; }
+      .tname    { font-size: 14px; font-weight: 700; fill: #1a1a1a; }
+      .field    { font-size: 12px; fill: #2a2a2a; }
+      .muted    { font-size: 11px; fill: #8a8a8a; font-style: italic; }
+      .pk       { font-weight: 700; fill: #d47838; }
+      .fk       { fill: #7938d4; }
+      .arrow    { stroke: #d47838; stroke-width: 1.6; fill: none; }
+      .arrow-d  { stroke: #d47838; stroke-width: 1.6; fill: none; stroke-dasharray: 5 4; }
+      .rel-lab  { font-size: 10px; fill: #8a8a8a; font-style: italic; }
+      .new      { fill: #2faa6a; font-weight: 700; }
+    </style>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#d47838"/>
+    </marker>
+  </defs>
+
+  <!-- ============== COLONNE 1 : AUTH / SOCIAL ============== -->
+
+  <g transform="translate(30, 30)">
+    <rect class="card" rx="6" width="270" height="100"/>
+    <path class="h-auth" d="M0,5 a5,5 0 0 1 5,-5 h260 a5,5 0 0 1 5,5 v27 h-270 z"/>
+    <text class="tname" x="14" y="22">auth.users</text>
+    <text class="muted" x="14" y="50">géré par Supabase</text>
+    <text class="field pk" x="14" y="72">PK  id (uuid)</text>
+    <text class="field" x="14" y="90">email, encrypted_password, …</text>
+  </g>
+
+  <g transform="translate(30, 160)">
+    <rect class="card" rx="6" width="270" height="230"/>
+    <path class="h-auth" d="M0,5 a5,5 0 0 1 5,-5 h260 a5,5 0 0 1 5,5 v27 h-270 z"/>
+    <text class="tname" x="14" y="22">profiles</text>
+    <text class="field pk" x="14" y="52">PK  id (uuid)</text>
+    <text class="field fk" x="14" y="72">    → auth.users(id), 1:1</text>
+    <text class="field" x="14" y="94">first_name, last_name</text>
+    <text class="field" x="14" y="114">username    (unique)</text>
+    <text class="field" x="14" y="134">bio</text>
+    <text class="field" x="14" y="154">avatar_url</text>
+    <text class="field" x="14" y="174">is_admin    (bool)</text>
+    <text class="field" x="14" y="194">last_seen_at</text>
+    <text class="field" x="14" y="214">created_at</text>
+  </g>
+
+  <g transform="translate(30, 420)">
+    <rect class="card" rx="6" width="270" height="170"/>
+    <path class="h-auth" d="M0,5 a5,5 0 0 1 5,-5 h260 a5,5 0 0 1 5,5 v27 h-270 z"/>
+    <text class="tname" x="14" y="22">friendships</text>
+    <text class="field pk" x="14" y="52">PK  id (uuid)</text>
+    <text class="field fk" x="14" y="72">FK  requester_id → users</text>
+    <text class="field fk" x="14" y="92">FK  addressee_id → users</text>
+    <text class="field" x="14" y="112">status   (pending | accepted)</text>
+    <text class="field" x="14" y="132">created_at, updated_at</text>
+    <text class="muted" x="14" y="152">unique(requester, addressee)</text>
+  </g>
+
+  <!-- ============== COLONNE 2 : GEAR BASE ============== -->
+
+  <g transform="translate(340, 30)">
+    <rect class="card" rx="6" width="290" height="440"/>
+    <path class="h-gear" d="M0,5 a5,5 0 0 1 5,-5 h280 a5,5 0 0 1 5,5 v27 h-290 z"/>
+    <text class="tname" x="14" y="22">gear</text>
+    <text class="muted" x="14" y="50">table de base — champs communs</text>
+    <text class="field pk" x="14" y="74">PK  id (uuid)</text>
+    <text class="field fk" x="14" y="94">FK  owner_id → users</text>
+    <text class="field" x="14" y="114">category   (guitar|amp|pedal|…)</text>
+    <text class="field" x="14" y="134">name</text>
+    <text class="field" x="14" y="154">brand</text>
+    <text class="field" x="14" y="174">model</text>
+    <text class="field" x="14" y="194">year</text>
+    <text class="field" x="14" y="214">country</text>
+    <text class="field" x="14" y="234">color</text>
+    <text class="field" x="14" y="254">weight_g</text>
+    <text class="field" x="14" y="274">condition</text>
+    <text class="field" x="14" y="294">purchase_date</text>
+    <text class="field" x="14" y="314">purchase_price</text>
+    <text class="field" x="14" y="334">estimated_value</text>
+    <text class="field" x="14" y="354">description</text>
+    <text class="field" x="14" y="374">photo_urls   (text[])</text>
+    <text class="field" x="14" y="394">is_public, is_favorite, is_wishlist</text>
+    <text class="field" x="14" y="414">created_at, updated_at</text>
+  </g>
+
+  <!-- Supabase Storage : petite carte sous gear -->
+  <g transform="translate(340, 490)">
+    <rect class="card" rx="6" width="290" height="120"/>
+    <path class="h-gear" d="M0,5 a5,5 0 0 1 5,-5 h280 a5,5 0 0 1 5,5 v27 h-290 z"/>
+    <text class="tname" x="14" y="22">Supabase Storage</text>
+    <text class="muted" x="14" y="50">buckets publics</text>
+    <text class="field" x="14" y="74">avatars       → profiles.avatar_url</text>
+    <text class="field" x="14" y="94">gear-photos   → gear.photo_urls[]</text>
+  </g>
+
+  <!-- ============== COLONNE 3 : TYPES ============== -->
+
+  <g transform="translate(670, 30)">
+    <rect class="card" rx="6" width="300" height="370"/>
+    <path class="h-type" d="M0,5 a5,5 0 0 1 5,-5 h290 a5,5 0 0 1 5,5 v27 h-300 z"/>
+    <text class="tname" x="14" y="22">gear_guitar</text>
+    <text class="muted" x="14" y="50">si category = 'guitar'</text>
+    <text class="field pk" x="14" y="74">PK  gear_id → gear (1:1)</text>
+    <text class="field" x="14" y="94">guitar_type  (élec / acoust / basse…)</text>
+    <text class="field" x="14" y="114">guitar_shape  (Strat, Les Paul, SG…)</text>
+    <text class="field" x="14" y="134">num_strings</text>
+    <text class="field" x="14" y="154">num_frets</text>
+    <text class="field" x="14" y="174">body_wood</text>
+    <text class="field" x="14" y="194">neck_wood</text>
+    <text class="field" x="14" y="214">fretboard_wood</text>
+    <text class="field" x="14" y="234">pickup_config   (SSS, HH, HSS…)</text>
+    <text class="field" x="14" y="254">pickup_models</text>
+    <text class="field" x="14" y="274">pickup_active   (bool)</text>
+    <text class="field" x="14" y="294">bridge</text>
+    <text class="field" x="14" y="314">scale_length_mm</text>
+    <text class="field" x="14" y="334">construction_type</text>
+    <text class="muted" x="14" y="354">(bolt-on | set-neck | neck-through)</text>
+  </g>
+
+  <g transform="translate(670, 430)">
+    <rect class="card" rx="6" width="300" height="270"/>
+    <path class="h-type" d="M0,5 a5,5 0 0 1 5,-5 h290 a5,5 0 0 1 5,5 v27 h-300 z"/>
+    <text class="tname" x="14" y="22">gear_amp</text>
+    <text class="muted" x="14" y="50">si category = 'amp'</text>
+    <text class="field pk" x="14" y="74">PK  gear_id → gear (1:1)</text>
+    <text class="field" x="14" y="94">amp_type   (combo | head | cab)</text>
+    <text class="field" x="14" y="114">technology   (lamp | trans | num)</text>
+    <text class="field" x="14" y="134">wattage</text>
+    <text class="field" x="14" y="154">num_channels   (1-32)</text>
+    <text class="field" x="14" y="174">speakers</text>
+    <text class="field" x="14" y="194">builtin_effects</text>
+    <text class="field" x="14" y="214">main_controls</text>
+    <text class="field" x="14" y="234">main_connectivity</text>
+  </g>
+
+  <g transform="translate(670, 730)">
+    <rect class="card" rx="6" width="300" height="260"/>
+    <path class="h-type" d="M0,5 a5,5 0 0 1 5,-5 h290 a5,5 0 0 1 5,5 v27 h-300 z"/>
+    <text class="tname" x="14" y="22">gear_pedal</text>
+    <text class="muted" x="14" y="50">si category = 'pedal'</text>
+    <text class="field pk" x="14" y="74">PK  gear_id → gear (1:1)</text>
+    <text class="field" x="14" y="94">effect_type</text>
+    <text class="field" x="14" y="114">technology   (ana | num)</text>
+    <text class="field" x="14" y="134">main_controls</text>
+    <text class="field" x="14" y="154">bypass_type  (true | buffered)</text>
+    <text class="field" x="14" y="174">power   (9V, USB, …)</text>
+    <text class="field" x="14" y="194">connectivity</text>
+    <text class="field" x="14" y="214">format   (mini | std | double)</text>
+  </g>
+
+  <!-- ============== FLÈCHES / RELATIONS ============== -->
+
+  <path class="arrow" d="M 165 130 L 165 160" marker-end="url(#arr)"/>
+  <text class="rel-lab" x="170" y="148">1:1</text>
+
+  <path class="arrow" d="M 300 80 L 340 80" marker-end="url(#arr)"/>
+  <text class="rel-lab" x="305" y="73">owner_id (1:N)</text>
+
+  <path class="arrow-d" d="M 100 420 C 100 380, 100 230, 100 130" marker-end="url(#arr)"/>
+  <text class="rel-lab" x="106" y="290">×2 FK vers users</text>
+
+  <path class="arrow" d="M 630 110 L 670 110" marker-end="url(#arr)"/>
+  <text class="rel-lab" x="635" y="103">1:1</text>
+
+  <path class="arrow" d="M 630 240 C 650 240, 650 480, 670 490" marker-end="url(#arr)"/>
+  <text class="rel-lab" x="635" y="380">1:1 si amp</text>
+
+  <path class="arrow" d="M 630 360 C 655 360, 655 790, 670 790" marker-end="url(#arr)"/>
+  <text class="rel-lab" x="635" y="640">1:1 si pedal</text>
+
+  <!-- ============== LÉGENDE ============== -->
+
+  <g transform="translate(30, 640)">
+    <text class="tname" x="0" y="0">Légende</text>
+    <text class="field pk" x="0" y="24">PK</text>
+    <text class="field" x="34" y="24">primary key</text>
+    <text class="field fk" x="0" y="44">FK</text>
+    <text class="field" x="34" y="44">foreign key</text>
+
+    <line class="arrow" x1="0" y1="68" x2="40" y2="68" marker-end="url(#arr)"/>
+    <text class="field" x="50" y="72">relation 1:1 ou 1:N</text>
+
+    <line class="arrow-d" x1="0" y1="92" x2="40" y2="92" marker-end="url(#arr)"/>
+    <text class="field" x="50" y="96">relation multiple (×N FK)</text>
+
+    <rect x="0" y="110" width="14" height="14" class="h-auth" stroke="#d4d4d4"/>
+    <text class="field" x="22" y="121">Auth / Social</text>
+
+    <rect x="0" y="130" width="14" height="14" class="h-gear" stroke="#d4d4d4"/>
+    <text class="field" x="22" y="141">Gear &amp; Storage</text>
+
+    <rect x="0" y="150" width="14" height="14" class="h-type" stroke="#d4d4d4"/>
+    <text class="field" x="22" y="161">Type spécifique</text>
+  </g>
+
+</svg>
